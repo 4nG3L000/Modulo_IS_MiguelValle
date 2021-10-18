@@ -1,0 +1,275 @@
+<odoo>
+  <data>
+    <!-- VISTAS DE LOS CURSOS -->
+
+    <record id="course_view_kanban" model="ir.ui.view">   
+    <field name="name">course.view.kanban</field>   
+    <field name="model">academy.course</field>   
+    <field name="arch" type="xml">       
+      <kanban>           
+        <field name="id"/>          
+        <field name="title"/>          
+        <field name="description"/>                 
+        <field name="image"/>           
+        <field name="hora"/>           
+          <templates>               
+            <t t-name="kanban-box">                   
+              <div t-attf-class="oe_kanban_global_click">                       
+                <div class="o_kanban_image">                           
+                  <img alt="Avatar" t-att-src="kanban_image('academy.course', 'image', record.id.raw_value)"/>                      
+                </div>                       
+                <div class="oe_kanban_details">                           
+                  <t class="o_kanban_record_title">                               
+                    <strong t-esc="record.title.value"/>                           
+                  </t>                           
+                  <div t-if="record.description.value">                               
+                    <t t-esc="record.description.value"/>                           
+                  </div>                                                 
+                  <div t-if="record.hora.value">                               
+                    <t t-esc="record.hora.value"/>                           
+                  </div>                                                 
+                </div>                   
+              </div>               
+            </t>           
+          </templates>       
+      </kanban>   
+    </field>
+    </record>	
+    
+    <record model="ir.ui.view" id="course_view_list">
+      <field name="name">course.view.list</field>
+      <field name="model">academy.course</field>
+      <field name="arch" type="xml">
+        <tree string="CURSOS DE ACADEMY">
+          <field name="image" string="Imagen" optional="show" widget="image" height="30" width="30"/>
+          <field name="title"/>
+          <field name="description"/>
+          <field name="fecha_inicio"/>
+          <field name="fecha_fin"/>
+          <field name="hora"/>
+          <field name="teacher_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="course_view_form">
+      <field name="name">course.view.form</field>
+      <field name="model">academy.course</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <div class="oe_title">
+                <h1>Informacion del curso</h1>
+            </div>
+           <group colspan="4">
+              <group colspan="2" col="2">
+                  <group>
+                    <field name="title"/>
+                    <field name="teacher_id"/>
+                  </group>  
+                  <group>
+                    <field name="fecha_inicio"/>
+                    <field name="fecha_fin"/>
+                    <field name="hora"/>
+                  </group>  
+              </group>
+              <group colspan="1" col="1">
+                <group>
+                    <field name="image" optional="show" widget="image" height="100" width="100"/>
+                </group>
+              </group>
+
+              <notebook colspan="4">
+                  <page string="Participantes">
+                      <field name="participant_ids" nolabel="1">
+                        <tree editable="bottom">
+                          <field name="image" optional="show" widget="image" height="30" width="30" readonly="True"/>
+                          <field name="first_name" readonly="True"/>
+                          <field name="last_name" readonly="True"/>
+                          <field name="doc_id" readonly="True"/>
+                          <field name="phone" readonly="True"/>
+                          <field name="email" readonly="True"/>
+                        </tree>
+                      </field>
+                  </page>
+                  <page string="Description">
+                      <field name="description" nolabel="1"/>
+                  </page>
+              </notebook>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+  <!-- VISTAS DE LOS PARTICIPANTES -->
+
+    <record id="participant_view_kanban" model="ir.ui.view">   
+      <field name="name">participant.view.kanban</field>   
+      <field name="model">academy.participant</field>   
+      <field name="arch" type="xml">       
+        <kanban>           
+          <field name="id"/>          
+          <field name="first_name"/>          
+          <field name="last_name"/>                 
+          <field name="image"/>           
+          <field name="email"/>           
+            <templates>               
+              <t t-name="kanban-box">                   
+                <div t-attf-class="oe_kanban_global_click">                       
+                  <div class="o_kanban_image">                           
+                    <img alt="Avatar" t-att-src="kanban_image('academy.participant', 'image', record.id.raw_value)"/>                      
+                  </div>                       
+                  <div class="oe_kanban_details">                           
+                    <t class="o_kanban_record_title">                               
+                      <strong t-esc="record.first_name.value"/>                           
+                      <strong t-esc="record.last_name.value"/>                           
+                    </t>                           
+                    <div t-if="record.email.value">                               
+                      <t t-esc="record.email.value"/>                           
+                    </div>                                                 
+                  </div>                   
+                </div>               
+              </t>           
+            </templates>       
+        </kanban>   
+      </field>
+    </record>	
+
+    <record model="ir.ui.view" id="participant_view_list">
+      <field name="name">participant.view.list</field>
+      <field name="model">academy.participant</field>
+      <field name="arch" type="xml">
+        <tree string="PARTICIPANTES">
+          <field name="image" optional="show" widget="image" height="30" width="30"/>
+          <field name="first_name"/>
+          <field name="last_name"/>
+          <field name="doc_id"/>
+          <field name="phone"/>
+          <field name="email"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="participant_view_form">
+      <field name="name">participant.view.form</field>
+      <field name="model">academy.participant</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+             <div class="oe_title">
+                <h1>Informacion del Participante</h1>
+            </div>
+            <group>
+              <group>
+                  <field name="image" optional="show" widget="image" height="100" width="100"/>
+              </group>
+            </group>
+            <group colspan="4">
+                <group col="2">
+                    <field name="first_name"/>
+                    <field name="last_name"/>
+                    <field name="email"/>
+                </group>
+                <group col="2">
+                    <field name="doc_id"/>
+                    <field name="phone"/>
+                </group>
+                <group colspan="4">
+                    <separator colspan="4"/>
+                    <field name="course_ids">
+                        <tree editable="top">
+                            <field name="image" string="Imagen" optional="show" widget="image" height="30" width="30" readonly="True"/>
+                            <field name="title" readonly="True"/>
+                            <field name="description" readonly="True"/>
+                        </tree>
+                    </field>
+                </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- VISTAS DE LOS DOCENTES -->
+     <record model="ir.ui.view" id="teacher_view_list">
+      <field name="name">teacher.view.list</field>
+      <field name="model">academy.teacher</field>
+      <field name="arch" type="xml">
+        <tree string="DOCENTES">
+          <field name="image" optional="show" widget="image" height="30" width="30"/>
+          <field name="name"/>
+          <field name="doc_id"/>
+          <field name="phone"/>
+          <field name="email"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="teacher_view_form">
+      <field name="name">teacher.view.form</field>
+      <field name="model">academy.teacher</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+             <div class="oe_title">
+                <h1>Informacion del Docente</h1>
+            </div>
+            <group>
+              <group>
+                  <field name="image" optional="show" widget="image" height="100" width="100"/>
+              </group>
+            </group>
+            <group colspan="4">
+                <group col="2">
+                    <field name="name"/>
+                    <field name="email"/>
+                </group>
+                <group col="2">
+                    <field name="doc_id"/>
+                    <field name="phone"/>
+                </group>
+                <group colspan="4">
+                    <separator colspan="4"/>
+                    <field name="course_ids">
+                        <tree editable="top">
+                            <field name="image" string="Imagen" optional="show" widget="image" height="30" width="30" readonly="True"/>
+                            <field name="title" readonly="True"/>
+                            <field name="description" readonly="True"/>
+                        </tree>
+                    </field>
+                </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    
+    <record model="ir.actions.act_window" id="course_action_window">
+      <field name="name">Cursos</field>
+      <field name="res_model">academy.course</field>
+      <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="participant_action_window">
+      <field name="name">Participantes</field>
+      <field name="res_model">academy.participant</field>
+      <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="teacher_action_window">
+      <field name="name">Docentes</field>
+      <field name="res_model">academy.teacher</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+   
+   <!-- menu -->
+    <menuitem name="Academy" id="courses_menu_root"/>
+
+    <menuitem name="Cursos" id="course_menu" parent="courses_menu_root" action="course_action_window"/>
+    <menuitem name="Participantes" id="participant_menu" parent="courses_menu_root" action="participant_action_window"/>
+    <menuitem name="Docentes" id="teacher_menu" parent="courses_menu_root" action="teacher_action_window"/>
+  </data>
+</odoo>
